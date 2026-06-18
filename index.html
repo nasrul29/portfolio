@@ -77,6 +77,19 @@
 
     .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
+    /* ── Profile photo ── */
+    .profile-pic {
+      width: 100px; height: 100px; border-radius: 2px;
+      object-fit: cover; border: 2px solid var(--accent);
+      margin-bottom: 16px; filter: grayscale(30%);
+    }
+    .profile-pic-hero {
+      width: 80px; height: 80px; border-radius: 2px;
+      object-fit: cover; border: 2px solid var(--accent);
+      margin-bottom: 20px; filter: grayscale(20%);
+      box-shadow: 0 0 30px var(--accent-glow);
+    }
+
     /* ── Nav ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -405,6 +418,7 @@
     <div class="hero-badge">
       <i class="fas fa-shield-halved"></i> SECURITY CLEARANCE // ACTIVE
     </div>
+    <img src="profile.jpg" alt="Mohammad Nasrullah" class="profile-pic-hero">
     <h1><span class="highlight">Mohammad Nasrullah</span> Bin Abu Bakar</h1>
     <div class="title-line">Senior Software Engineer <span>//</span> COP &amp; GIS Specialist</div>
     <p>10 years building mission-critical command, control, and intelligence systems for MINDEF, ESSCOM, and Telekom Malaysia. Full-stack · Geospatial · Defence Tech.</p>
@@ -434,6 +448,9 @@
       </div>
       <div class="about-info">
         <h4><i class="fas fa-address-card"></i> CALLSIGN // Intake</h4>
+        <div style="text-align:center;margin-bottom:16px;">
+          <img src="profile.jpg" alt="Mohammad Nasrullah" class="profile-pic">
+        </div>
         <div class="info-item">
           <i class="fas fa-user"></i>
           <div><div class="label">NAME</div><div class="value">Mohammad Nasrullah</div></div>
