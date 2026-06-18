@@ -84,10 +84,14 @@
       margin-bottom: 16px; filter: grayscale(30%);
     }
     .profile-pic-hero {
-      width: 80px; height: 80px; border-radius: 2px;
+      width: 90px; height: 90px; border-radius: 2px;
       object-fit: cover; border: 2px solid var(--accent);
-      margin-bottom: 20px; filter: grayscale(20%);
+      flex-shrink: 0;
       box-shadow: 0 0 30px var(--accent-glow);
+    }
+    .hero-name-wrap {
+      display: flex; align-items: center; gap: 24px;
+      margin-bottom: 12px;
     }
 
     /* ── Nav ── */
@@ -418,9 +422,13 @@
     <div class="hero-badge">
       <i class="fas fa-shield-halved"></i> SECURITY CLEARANCE // ACTIVE
     </div>
-    <img src="profile.jpg" alt="Mohammad Nasrullah" class="profile-pic-hero">
-    <h1><span class="highlight">Mohammad Nasrullah</span> Bin Abu Bakar</h1>
-    <div class="title-line">Senior Software Engineer <span>//</span> COP &amp; GIS Specialist</div>
+    <div class="hero-name-wrap">
+      <img src="profile.jpg" alt="Mohammad Nasrullah" class="profile-pic-hero">
+      <div>
+        <h1><span class="highlight">Mohammad Nasrullah</span> Bin Abu Bakar</h1>
+        <div class="title-line">Senior Software Engineer <span>//</span> COP &amp; GIS Specialist</div>
+      </div>
+    </div>
     <p>10 years building mission-critical command, control, and intelligence systems for MINDEF, ESSCOM, and Telekom Malaysia. Full-stack · Geospatial · Defence Tech.</p>
     <div class="hero-stats">
       <div class="stat"><h3>10+</h3><p>Years Service</p></div>
