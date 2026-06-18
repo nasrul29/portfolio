@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohammad Nasrullah — Senior Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --pink: #e11d48;
+      --black: #0f0f0f;
+      --white: #ffffff;
+      --gray-50: #fafafa;
+      --gray-100: #f5f5f5;
+      --gray-200: #e5e5e5;
+      --gray-400: #a3a3a3;
+      --gray-500: #737373;
+      --gray-600: #525252;
+      --gray-800: #262626;
+    }
+
+    html {
+      font-size: 18px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 10vw, 6rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      border-bottom: 5px solid var(--black);
+      padding-bottom: 0.35rem;
+      margin-bottom: 2rem;
+      display: inline-block;
+    }
+
+    h2 .highlight {
+      color: var(--pink);
+    }
+
+    h3 {
+      font-size: 1.35rem;
+      font-weight: 600;
+    }
+
+    p, li {
+      font-size: 1rem;
+      color: var(--gray-600);
+    }
+
+    a {
+      color: var(--black);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--pink);
+      transition: width 0.3s ease;
+    }
+
+    a:hover::after { width: 100%; }
+    a:hover { color: var(--pink); }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      padding: 4rem 0 2rem;
+      border-bottom: 4px solid var(--black);
+    }
+
+    .header-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .header-name {
+      line-height: 1;
+    }
+
+    .header-name .first-line {
+      display: block;
+    }
+
+    .header-name .last-line {
+      display: block;
+      color: var(--pink);
+    }
+
+    .header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--gray-500);
+    }
+
+    .header-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .header-meta .tag {
+      display: inline-block;
+      background: var(--black);
+      color: var(--white);
+      padding: 0.2rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .header-title-role {
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .header-languages {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .lang-badge {
+      border: 2px solid var(--black);
+      padding: 0.2rem 0.8rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all 0.2s;
+    }
+
+    .lang-badge:hover {
+      background: var(--pink);
+      border-color: var(--pink);
+      color: var(--white);
+      transform: scale(1.05);
+    }
+
+    /* ===== SECTION ===== */
+    .section {
+      padding: 4rem 0;
+      border-bottom: 2px solid var(--gray-200);
+    }
+
+    .section:last-of-type {
+      border-bottom: 4px solid var(--black);
+    }
+
+    /* ===== STATS BAR (brutalist inspired) ===== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+
+    .stat-card {
+      border: 3px solid var(--black);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stat-card:hover {
+      transform: scale(1.03);
+      box-shadow: 8px 8px 0 var(--pink);
+    }
+
+    .stat-number {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--pink);
+      letter-spacing: -0.04em;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.5rem;
+      color: var(--gray-500);
+    }
+
+    /* ===== EXPERIENCE ===== */
+    .exp-card {
+      border: 2px solid var(--gray-200);
+      background: var(--white);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .exp-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+      border-color: var(--pink);
+    }
+
+    .exp-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .exp-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .exp-company {
+      color: var(--pink);
+      font-weight: 600;
+    }
+
+    .exp-date {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .exp-desc {
+      color: var(--gray-600);
+      margin-bottom: 1rem;
+    }
+
+    .project-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .project-list li {
+      position: relative;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+      color: var(--gray-500);
+    }
+
+    .project-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--pink);
+      font-weight: 700;
+    }
+
+    .project-list li strong {
+      color: var(--black);
+      font-weight: 600;
+    }
+
+    /* ===== SKILLS ===== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-category {
+      border: 2px solid var(--gray-200);
+      padding: 1.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .skill-category:hover {
+      border-color: var(--pink);
+      transform: scale(1.02);
+    }
+
+    .skill-category h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--pink);
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .skill-tag {
+      background: var(--gray-100);
+      padding: 0.25rem 0.7rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: 1px solid var(--gray-200);
+      transition: all 0.2s;
+    }
+
+    .skill-tag:hover {
+      background: var(--pink);
+      color: var(--white);
+      border-color: var(--pink);
+      transform: scale(1.05);
+    }
+
+    /* ===== EDUCATION ===== */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .edu-card {
+      border: 2px solid var(--gray-200);
+      padding: 1.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .edu-card:hover {
+      border-color: var(--black);
+      transform: scale(1.02);
+      box-shadow: 6px 6px 0 var(--pink);
+    }
+
+    .edu-degree {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .edu-school {
+      color: var(--gray-500);
+      font-size: 0.9rem;
+    }
+
+    .edu-year {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--pink);
+      margin-top: 0.25rem;
+    }
+
+    /* ===== ACHIEVEMENTS ===== */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .achievement-item {
+      border: 2px solid var(--gray-200);
+      padding: 1.25rem 1.5rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .achievement-item::before {
+      content: '◆';
+      color: var(--pink);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .achievement-item:hover {
+      border-color: var(--black);
+      transform: scale(1.03);
+      background: var(--gray-50);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links a {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      font-weight: 500;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      html { font-size: 16px; }
+      .container { padding: 0 1.25rem; }
+      .header { padding: 2.5rem 0 1.5rem; }
+      .section { padding: 2.5rem 0; }
+      .exp-card { padding: 1.5rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="container header-content">
+      <h1 class="header-name">
+        <span class="first-line">Mohammad Nasrullah</span>
+        <span class="last-line">Bin Abu Bakar</span>
+      </h1>
+      <div class="header-title-role">Senior Software Engineer · <span style="color:var(--pink)">10 yrs</span></div>
+      <div class="header-meta">
+        <span>📍 Kajang, Selangor</span>
+        <span>📞 010-4565686</span>
+        <span>✉️ nasrul29@gmail.com</span>
+        <span><a href="https://www.linkedin.com/in/mohammad-nasrullah-abu-bakar-634962b7" target="_blank">LinkedIn ↗</a></span>
+        <span class="tag">Open to Work</span>
+      </div>
+      <div class="header-languages">
+        <span class="lang-badge">🇲🇾 Bahasa Melayu — Native</span>
+        <span class="lang-badge">🇬🇧 English — Professional</span>
+        <span class="lang-badge">🇸🇦 Arabic — Basic</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== STATS BAR ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">10</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">3</div>
+            <div class="stat-label">DSA Exhibitor</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">5+</div>
+            <div class="stat-label">Major Platforms</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Mission-Critical</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROFESSIONAL SUMMARY ===== -->
+    <section class="section">
+      <div class="container">
+        <h2>About</h2>
+        <p style="font-size:1.15rem; max-width: 900px; line-height:1.7;">
+          Senior Software Engineer with <strong>10 years</strong> of experience in full-stack development, GIS applications, and system integration. Specialized in building <strong>Common Operating Picture (COP)</strong> systems for defence and security operations — integrating sensor data, real-time visualization, and intelligence reporting. Proven track record delivering complex mission-critical systems for <strong>MINDEF</strong>, <strong>ESSCOM</strong>, and <strong>Telekom Malaysia</strong>. Strong across Python, Node.js, React, AngularJS, and C# with deep expertise in Docker containerization, data analytics, and geospatial systems.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== EXPERIENCE ===== -->
+    <section class="section">
+      <div class="container">
+        <h2><span class="highlight">Experience</span></h2>
+
+        <!-- Mindmatics -->
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <span class="exp-title">Software Engineer</span>
+              <span class="exp-company"> · Mindmatics Sdn Bhd</span>
+              <span style="color:var(--gray-400); font-size:0.9rem;"> — Kajang, Selangor</span>
+            </div>
+            <span class="exp-date">2016–Present · 10 yrs</span>
+          </div>
+          <p class="exp-desc">Develop and maintain mission-critical command, control, and intelligence systems for defence and security agencies. Lead GIS application development and sensor data integration.</p>
+          <ul class="project-list">
+            <li><strong>C2 COP System — MINDEF/ESSCOM:</strong> Common Operating Picture platform for real-time situational awareness. Integrated ADS-B (air traffic) and AIS (maritime vessel) tracking into unified geospatial display. Web: OpenLayers, React, AngularJS. Desktop: C# WPF + Mapsui. Backend: Python, Node.js, RabbitMQ, Elasticsearch, Kibana, Docker.</li>
+            <li><strong>TRIBE Platform — Telekom Malaysia:</strong> Full-stack web modules for digital transformation. React, Python, Node.js, MySQL, MSSQL, Redis.</li>
+            <li><strong>EW Navigator 2.0:</strong> C# WPF desktop with Telerik UI. Integrated RDF (Radio Direction Finding) system for bi-directional tasking between command centre and field operators via encrypted MINDEF network.</li>
+            <li><strong>Cross-Platform App — Royal Malaysian Navy:</strong> Avalonia (C#) for Ubuntu Linux, replacing legacy Windows-only systems.</li>
+            <li><strong>Others:</strong> Power BI dashboards, custom Power BI visual with Leaflet.js for GIS maps, offline TileServer using OSM for isolated networks. Data migration (user management, map layers, operator dossiers) with zero downtime.</li>
+          </ul>
+        </div>
+
+        <!-- NFE Consulting -->
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <span class="exp-title">Software Engineer</span>
+              <span class="exp-company"> · NFE Consulting Sdn Bhd</span>
+              <span style="color:var(--gray-400); font-size:0.9rem;"> — KL</span>
+            </div>
+            <span class="exp-date">2015–2016 · 1 yr</span>
+          </div>
+          <p class="exp-desc">Sole back-end developer. Maintained i-Kajang, VRS (Visitor Registration System in VB), Heritage Trail Taiping. Python Flask, PHP CodeIgniter, MySQL, SQLite, REST APIs.</p>
+        </div>
+
+        <!-- Intern -->
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <span class="exp-title">Intern</span>
+              <span class="exp-company"> · NFE Consulting Sdn Bhd</span>
+              <span style="color:var(--gray-400); font-size:0.9rem;"> — KL</span>
+            </div>
+            <span class="exp-date">Jun–Dec 2015</span>
+          </div>
+          <p class="exp-desc">Offered permanent position after internship.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TECHNICAL SKILLS ===== -->
+    <section class="section">
+      <div class="container">
+        <h2><span class="highlight">Skills</span></h2>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3>Languages</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">JavaScript/TypeScript</span>
+              <span class="skill-tag">PHP</span>
+              <span class="skill-tag">C#</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">HTML/CSS</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Frontend</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">AngularJS</span>
+              <span class="skill-tag">Angular 6+</span>
+              <span class="skill-tag">C# WPF</span>
+              <span class="skill-tag">Avalonia</span>
+              <span class="skill-tag">Telerik</span>
+              <span class="skill-tag">jQuery</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Backend</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">Express.js</span>
+              <span class="skill-tag">Flask</span>
+              <span class="skill-tag">CodeIgniter</span>
+              <span class="skill-tag">REST API</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>GIS & Viz</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">OpenLayers</span>
+              <span class="skill-tag">Leaflet.js</span>
+              <span class="skill-tag">GeoServer</span>
+              <span class="skill-tag">TileServer</span>
+              <span class="skill-tag">Mapsui</span>
+              <span class="skill-tag">Power BI</span>
+              <span class="skill-tag">Kibana</span>
+              <span class="skill-tag">COP Systems</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Databases</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">MySQL</span>
+              <span class="skill-tag">MSSQL</span>
+              <span class="skill-tag">MongoDB</span>
+              <span class="skill-tag">MariaDB</span>
+              <span class="skill-tag">Redis</span>
+              <span class="skill-tag">SQLite</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Message Brokers</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">RabbitMQ</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Search & Analytics</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Elasticsearch</span>
+              <span class="skill-tag">Kibana</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>DevOps</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Docker</span>
+              <span class="skill-tag">Portainer</span>
+              <span class="skill-tag">Proxmox (KVM/LXC)</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">Nginx</span>
+              <span class="skill-tag">Reverse Proxy</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>AI</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Hermes Agent</span>
+              <span class="skill-tag">OpenAI Codex</span>
+              <span class="skill-tag">Prompt Engineering</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EDUCATION ===== -->
+    <section class="section">
+      <div class="container">
+        <h2><span class="highlight">Education</span></h2>
+        <div class="edu-grid">
+          <div class="edu-card">
+            <div class="edu-degree">Bachelor of Information Technology (Hons) — 2nd Class Upper</div>
+            <div class="edu-school">IIUM · International Islamic University Malaysia</div>
+            <div class="edu-year">2011–2015</div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-degree">Foundation in Information Technology</div>
+            <div class="edu-school">Centre for Foundation Studies IIUM</div>
+            <div class="edu-year">2009–2011</div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-degree">SPM — Pure Science</div>
+            <div class="edu-school">SMKA Kerian, Perak</div>
+            <div class="edu-year">2004–2008</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== KEY ACHIEVEMENTS ===== -->
+    <section class="section">
+      <div class="container">
+        <h2><span class="highlight">Achievements</span></h2>
+        <div class="achievements-grid">
+          <div class="achievement-item">Developed mission-critical COP system for MINDEF and ESSCOM</div>
+          <div class="achievement-item">Integrated ADS-B + AIS data into unified geospatial display for defence command centres</div>
+          <div class="achievement-item">Delivered Telekom Malaysia's TRIBE platform</div>
+          <div class="achievement-item">Developed isolated EW Navigator 2.0 system with RDF integration via encrypted MINDEF network</div>
+          <div class="achievement-item">3× DSA (Defence Security Asia) exhibitor — Asia's premier defence exhibition</div>
+          <div class="achievement-item">10-year continuous service at Mindmatics</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="tel:0104565686">📞 010-4565686</a>
+        <a href="mailto:nasrul29@gmail.com">✉️ nasrul29@gmail.com</a>
+        <a href="https://www.linkedin.com/in/mohammad-nasrullah-abu-bakar-634962b7" target="_blank">🔗 LinkedIn</a>
+      </div>
+      <p class="footer-copy">© 2026 Mohammad Nasrullah Bin Abu Bakar — Neon Minimal</p>
+    </div>
+  </footer>
+
+</body>
+</html>

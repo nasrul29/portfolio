@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>root@nasrul:~$ ./portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: #0a0a0a;
+  color: #00ff41;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  line-height: 1.7;
+  font-size: 15px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ===== CRT SCANLINE OVERLAY ===== */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ===== CRT FLOATING PARTICLES (slight gnarl) ===== */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(0,255,65,0.015) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 9998;
+  animation: crtPulse 8s ease-in-out infinite;
+}
+@keyframes crtPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #00ff41; border-radius: 4px; }
+
+/* ===== LAYOUT ===== */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== TYPING ANIMATION ===== */
+.typing-wrapper {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #00ff41;
+  animation: blinkCursor 0.8s step-end infinite;
+}
+.typing-line {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 2s steps(40, end) forwards;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+.typing-line-1 { animation-delay: 0.2s; }
+.typing-line-2 { animation-delay: 2.5s; width: 0; animation: typing 2s steps(40, end) 2.5s forwards; }
+.typing-line-3 { animation-delay: 5s; width: 0; animation: typing 2s steps(40, end) 5s forwards; }
+@keyframes typing {
+  from { width: 0; opacity: 1; }
+  to { width: 100%; opacity: 1; }
+}
+@keyframes blinkCursor {
+  50% { border-color: transparent; }
+}
+
+/* ===== TERMINAL PROMPT ===== */
+.prompt { color: #00cc33; }
+.prompt-user { color: #00ff41; font-weight: 700; }
+.prompt-at { color: #00cc33; }
+.prompt-host { color: #00ff41; font-weight: 700; }
+.prompt-path { color: #00cc33; }
+.prompt-symbol { color: #00ff41; }
+.prompt-cmd { color: #e6f7e6; }
+
+/* ===== HERO ===== */
+.hero {
+  padding: 60px 0 40px;
+  border-bottom: 1px solid rgba(0,255,65,0.15);
+  margin-bottom: 40px;
+}
+.hero .terminal-line {
+  font-size: 18px;
+  margin-bottom: 10px;
+  line-height: 1.8;
+}
+.hero .terminal-line.cmd {
+  font-size: 16px;
+  margin-top: 16px;
+}
+.hero .cursor-block {
+  display: inline-block;
+  width: 10px;
+  height: 1.2em;
+  background: #00ff41;
+  animation: blink 1s step-end infinite;
+  vertical-align: text-bottom;
+  margin-left: 4px;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* ===== OUTPUT BOX ===== */
+.output-box {
+  background: rgba(0,255,65,0.02);
+  border: 1px solid rgba(0,255,65,0.12);
+  padding: 20px 24px;
+  margin-top: 20px;
+  border-radius: 4px;
+}
+.output-box .line { margin-bottom: 6px; }
+.output-box .line:last-child { margin-bottom: 0; }
+
+/* ===== SECTION HEADERS ===== */
+.section {
+  margin-bottom: 50px;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0,255,65,0.2);
+}
+.section-header .arrow { color: #00ff41; font-size: 20px; }
+.section-header h2 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #00ff41;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.section-header .comment {
+  color: rgba(0,255,65,0.35);
+  font-size: 13px;
+  font-weight: 300;
+  margin-left: auto;
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: rgba(0,255,65,0.03);
+  border: 1px solid rgba(0,255,65,0.12);
+  border-radius: 4px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.card:hover {
+  border-color: rgba(0,255,65,0.35);
+  box-shadow: 0 0 20px rgba(0,255,65,0.06);
+}
+.card h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #00ff41;
+  margin-bottom: 6px;
+}
+.card .subtitle {
+  font-size: 13px;
+  color: rgba(0,255,65,0.55);
+  margin-bottom: 10px;
+}
+.card p, .card li {
+  font-size: 14px;
+  color: rgba(0,255,65,0.85);
+  line-height: 1.8;
+}
+.card ul { list-style: none; padding: 0; }
+.card ul li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 4px;
+}
+.card ul li::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  color: #00cc33;
+  font-weight: 700;
+}
+
+/* ===== SKILL BARS ===== */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.skill-item {
+  background: rgba(0,255,65,0.03);
+  border: 1px solid rgba(0,255,65,0.1);
+  border-radius: 4px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: border-color 0.3s;
+}
+.skill-item:hover {
+  border-color: rgba(0,255,65,0.3);
+}
+.skill-name { color: #00ff41; font-size: 13px; }
+.skill-cat { color: rgba(0,255,65,0.45); font-size: 11px; }
+
+/* ===== SUMMARY BOX ===== */
+.summary-box {
+  background: rgba(0,255,65,0.02);
+  border: 1px solid rgba(0,255,65,0.12);
+  border-left: 3px solid #00ff41;
+  padding: 20px 24px;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 30px;
+}
+.summary-box p {
+  color: rgba(0,255,65,0.85);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* ===== CONTACT BAR ===== */
+.contact-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 16px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0,255,65,0.1);
+}
+.contact-bar span {
+  font-size: 13px;
+  color: rgba(0,255,65,0.75);
+}
+.contact-bar a {
+  color: #00ff41;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(0,255,65,0.3);
+}
+.contact-bar a:hover {
+  border-bottom-color: #00ff41;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 30px 0 10px;
+  border-top: 1px solid rgba(0,255,65,0.1);
+  margin-top: 20px;
+}
+.footer p {
+  font-size: 12px;
+  color: rgba(0,255,65,0.35);
+}
+.footer .prompt {
+  font-size: 13px;
+  color: rgba(0,255,65,0.5);
+  margin-bottom: 8px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .container { padding: 24px 16px; }
+  .hero .terminal-line { font-size: 14px; }
+  .hero .terminal-line.cmd { font-size: 13px; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .contact-bar { flex-direction: column; gap: 8px; }
+  .section-header { flex-wrap: wrap; }
+  .section-header .comment { margin-left: 0; width: 100%; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 30px 0 20px; }
+  .hero .terminal-line { font-size: 12px; }
+  .hero .terminal-line.cmd { font-size: 11px; }
+  .card { padding: 14px 16px; }
+  .output-box { padding: 14px 16px; }
+}
+
+/* ===== GLOW SELECTION ===== */
+::selection {
+  background: rgba(0,255,65,0.3);
+  color: #0a0a0a;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero">
+  <div class="terminal-line">
+    <span style="opacity:0.4;">Last login: Thu Jun 18 10:42:01 2026 from 127.0.0.1</span>
+  </div>
+  <div class="terminal-line">
+    <span class="prompt-user">nasrul</span><span class="prompt-at">@</span><span class="prompt-host">nasrul-pc</span><span class="prompt-path">:~$</span> <span class="prompt-cmd typing-line typing-line-1">./whoami.sh</span>
+  </div>
+  <div class="output-box" style="margin-top:10px;">
+    <div class="line" style="color:#00ff41;font-weight:700;font-size:20px;">Mohammad Nasrullah Bin Abu Bakar</div>
+    <div class="line" style="color:rgba(0,255,65,0.6);font-size:14px;">Senior Software Engineer</div>
+    <div class="line" style="color:rgba(0,255,65,0.45);font-size:13px;">Kajang, Selangor</div>
+  </div>
+
+  <div class="terminal-line cmd" style="margin-top:24px;">
+    <span class="prompt-user">nasrul</span><span class="prompt-at">@</span><span class="prompt-host">nasrul-pc</span><span class="prompt-path">:~$</span> <span class="prompt-cmd typing-line typing-line-2">./about.sh --details</span>
+  </div>
+  <div class="output-box" style="margin-top:10px;">
+    <div class="line" style="color:rgba(0,255,65,0.8);font-size:13px;">
+      Senior Software Engineer dengan 10 tahun pengalaman dalam full-stack development,<br>
+      GIS applications, dan system integration. Specialized dalam membina Common Operating<br>
+      Picture (COP) systems untuk defence &amp; security operations — integrating sensor data,<br>
+      real-time visualization, dan intelligence reporting.
+    </div>
+  </div>
+
+  <div class="terminal-line cmd" style="margin-top:24px;">
+    <span class="prompt-user">nasrul</span><span class="prompt-at">@</span><span class="prompt-host">nasrul-pc</span><span class="prompt-path">:~$</span> <span class="prompt-cmd typing-line typing-line-3">./contact.sh</span>
+  </div>
+  <div class="output-box" style="margin-top:10px;">
+    <div class="line">📞 010-4565686</div>
+    <div class="line">📧 nasrul29@gmail.com</div>
+    <div class="line">🔗 <a href="https://www.linkedin.com/in/mohammad-nasrullah-abu-bakar-634962b7" style="color:#00ff41;">linkedin.com/in/mohammad-nasrullah-abu-bakar</a></div>
+    <div class="line" style="color:rgba(0,255,65,0.5);font-size:12px;">Languages: Bahasa Melayu (Native) | English (Professional) | Arabic (Basic)</div>
+  </div>
+
+  <div style="margin-top:28px;font-size:13px;color:rgba(0,255,65,0.3);">
+    root@nasrul:~$ <span style="color:#e6f7e6;">ls -la ./sections/</span>
+  </div>
+  <div style="margin-top:8px;font-size:13px;color:rgba(0,255,65,0.5);">
+    drwxr-xr-x  7 nasrul nasrul  4096 Jun 18 10:42 .<br>
+    drwxr-xr-x  3 nasrul nasrul  4096 Jun 18 10:42 ..<br>
+    -rw-r--r--  1 nasrul nasrul  2048 Jun 18 10:42 <a href="#experience" style="color:#00ff41;text-decoration:none;">experience.sh</a><br>
+    -rw-r--r--  1 nasrul nasrul  1024 Jun 18 10:42 <a href="#skills" style="color:#00ff41;text-decoration:none;">skills.sh</a><br>
+    -rw-r--r--  1 nasrul nasrul   512 Jun 18 10:42 <a href="#education" style="color:#00ff41;text-decoration:none;">education.sh</a><br>
+    -rw-r--r--  1 nasrul nasrul  4096 Jun 18 10:42 <a href="#projects" style="color:#00ff41;text-decoration:none;">projects.sh</a><br>
+    -rw-r--r--  1 nasrul nasrul  1024 Jun 18 10:42 <a href="#achievements" style="color:#00ff41;text-decoration:none;">achievements.sh</a>
+  </div>
+</section>
+
+<!-- ===== EXPERIENCE ===== -->
+<section id="experience" class="section">
+  <div class="section-header">
+    <span class="arrow">▶</span>
+    <h2>EXPERIENCE</h2>
+    <span class="comment"># ./experience.sh --all</span>
+  </div>
+
+  <div class="card">
+    <h3>Software Engineer — Mindmatics Sdn Bhd</h3>
+    <div class="subtitle">Kajang, Selangor | 2016 – Present (10 years)</div>
+    <p>Develop and maintain mission-critical command, control, and intelligence systems for defence and security agencies. Lead GIS application development and sensor data integration.</p>
+    <ul style="margin-top:10px;">
+      <li><strong>C2 COP System — MINDEF/ESSCOM:</strong> Common Operating Picture platform for real-time situational awareness. Integrated ADS-B (air traffic) and AIS (maritime vessel) tracking into unified geospatial display. Web: OpenLayers, React, AngularJS. Desktop: C# WPF + Mapsui. Backend: Python, Node.js, RabbitMQ, Elasticsearch, Kibana, Docker.</li>
+      <li><strong>TRIBE Platform — Telekom Malaysia:</strong> Full-stack web modules for digital transformation. React, Python, Node.js, MySQL, MSSQL, Redis.</li>
+      <li><strong>EW Navigator 2.0:</strong> C# WPF desktop with Telerik UI. Integrated RDF (Radio Direction Finding) system for bi-directional tasking between command centre and field operators via encrypted MINDEF network.</li>
+      <li><strong>Cross-Platform App — Royal Malaysian Navy:</strong> Avalonia (C#) for Ubuntu Linux, replacing legacy Windows-only systems.</li>
+      <li><strong>Others:</strong> Power BI dashboards, custom Power BI visual with Leaflet.js for GIS maps, offline TileServer using OSM for isolated networks. Data migration (user management, map layers, operator dossiers) with zero downtime.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Software Engineer — NFE Consulting Sdn Bhd</h3>
+    <div class="subtitle">Kuala Lumpur | 2015 – 2016 (1 year)</div>
+    <p>Sole back-end developer. Maintained i-Kajang, VRS (Visitor Registration System in VB), Heritage Trail Taiping. Python Flask, PHP CodeIgniter, MySQL, SQLite, REST APIs.</p>
+  </div>
+
+  <div class="card">
+    <h3>Intern — NFE Consulting Sdn Bhd</h3>
+    <div class="subtitle">Kuala Lumpur | Jun – Dec 2015</div>
+    <p>Offered permanent position after internship.</p>
+  </div>
+</section>
+
+<!-- ===== TECHNICAL SKILLS ===== -->
+<section id="skills" class="section">
+  <div class="section-header">
+    <span class="arrow">▶</span>
+    <h2>TECHNICAL SKILLS</h2>
+    <span class="comment"># ./skills.sh --verbose</span>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-item"><span class="skill-name">Python</span><span class="skill-cat">Languages</span></div>
+    <div class="skill-item"><span class="skill-name">JavaScript / TypeScript</span><span class="skill-cat">Languages</span></div>
+    <div class="skill-item"><span class="skill-name">PHP</span><span class="skill-cat">Languages</span></div>
+    <div class="skill-item"><span class="skill-name">C#</span><span class="skill-cat">Languages</span></div>
+    <div class="skill-item"><span class="skill-name">Java</span><span class="skill-cat">Languages</span></div>
+    <div class="skill-item"><span class="skill-name">HTML / CSS</span><span class="skill-cat">Languages</span></div>
+    <div class="skill-item"><span class="skill-name">React</span><span class="skill-cat">Frontend</span></div>
+    <div class="skill-item"><span class="skill-name">AngularJS / Angular 6+</span><span class="skill-cat">Frontend</span></div>
+    <div class="skill-item"><span class="skill-name">C# WPF / Avalonia</span><span class="skill-cat">Frontend</span></div>
+    <div class="skill-item"><span class="skill-name">Telerik / jQuery</span><span class="skill-cat">Frontend</span></div>
+    <div class="skill-item"><span class="skill-name">Node.js / Express.js</span><span class="skill-cat">Backend</span></div>
+    <div class="skill-item"><span class="skill-name">Flask</span><span class="skill-cat">Backend</span></div>
+    <div class="skill-item"><span class="skill-name">CodeIgniter</span><span class="skill-cat">Backend</span></div>
+    <div class="skill-item"><span class="skill-name">REST API</span><span class="skill-cat">Backend</span></div>
+    <div class="skill-item"><span class="skill-name">OpenLayers / Leaflet.js</span><span class="skill-cat">GIS &amp; Viz</span></div>
+    <div class="skill-item"><span class="skill-name">GeoServer / TileServer</span><span class="skill-cat">GIS &amp; Viz</span></div>
+    <div class="skill-item"><span class="skill-name">Mapsui</span><span class="skill-cat">GIS &amp; Viz</span></div>
+    <div class="skill-item"><span class="skill-name">Power BI / Kibana</span><span class="skill-cat">GIS &amp; Viz</span></div>
+    <div class="skill-item"><span class="skill-name">COP Systems</span><span class="skill-cat">GIS &amp; Viz</span></div>
+    <div class="skill-item"><span class="skill-name">MySQL / MSSQL</span><span class="skill-cat">Databases</span></div>
+    <div class="skill-item"><span class="skill-name">MongoDB / MariaDB</span><span class="skill-cat">Databases</span></div>
+    <div class="skill-item"><span class="skill-name">Redis / SQLite</span><span class="skill-cat">Databases</span></div>
+    <div class="skill-item"><span class="skill-name">RabbitMQ</span><span class="skill-cat">Message Brokers</span></div>
+    <div class="skill-item"><span class="skill-name">Elasticsearch</span><span class="skill-cat">Search &amp; Analytics</span></div>
+    <div class="skill-item"><span class="skill-name">Docker / Portainer</span><span class="skill-cat">DevOps</span></div>
+    <div class="skill-item"><span class="skill-name">Proxmox (KVM/LXC)</span><span class="skill-cat">DevOps</span></div>
+    <div class="skill-item"><span class="skill-name">Git / Nginx</span><span class="skill-cat">DevOps</span></div>
+    <div class="skill-item"><span class="skill-name">Reverse Proxy</span><span class="skill-cat">DevOps</span></div>
+    <div class="skill-item"><span class="skill-name">Hermes Agent</span><span class="skill-cat">AI</span></div>
+    <div class="skill-item"><span class="skill-name">OpenAI Codex</span><span class="skill-cat">AI</span></div>
+    <div class="skill-item"><span class="skill-name">Prompt Engineering</span><span class="skill-cat">AI</span></div>
+  </div>
+</section>
+
+<!-- ===== PROJECTS (embedded in experience, but we highlight key ones) ===== -->
+<section id="projects" class="section">
+  <div class="section-header">
+    <span class="arrow">▶</span>
+    <h2>KEY PROJECTS</h2>
+    <span class="comment"># ./projects.sh --highlight</span>
+  </div>
+
+  <div class="card">
+    <h3>C2 COP System — MINDEF / ESSCOM</h3>
+    <div class="subtitle">Common Operating Picture Platform</div>
+    <p>Real-time situational awareness system for command centres. Integrated ADS-B (air traffic) and AIS (maritime vessel) tracking data into a unified geospatial display. Full-stack system using OpenLayers, React, AngularJS (web), C# WPF + Mapsui (desktop), Python, Node.js, RabbitMQ, Elasticsearch, Kibana, and Docker.</p>
+  </div>
+
+  <div class="card">
+    <h3>TRIBE Platform — Telekom Malaysia</h3>
+    <div class="subtitle">Digital Transformation Modules</div>
+    <p>Full-stack web modules built with React, Python, Node.js, MySQL, MSSQL, and Redis to support Telekom Malaysia's digital transformation initiative.</p>
+  </div>
+
+  <div class="card">
+    <h3>EW Navigator 2.0</h3>
+    <div class="subtitle">Electronic Warfare Navigation System</div>
+    <p>C# WPF desktop application with Telerik UI. Integrated RDF (Radio Direction Finding) system enabling bi-directional tasking between command centre and field operators via encrypted MINDEF network.</p>
+  </div>
+
+  <div class="card">
+    <h3>Cross-Platform App — Royal Malaysian Navy</h3>
+    <div class="subtitle">Avalonia (C#) on Ubuntu Linux</div>
+    <p>Replaced legacy Windows-only systems with a cross-platform Avalonia (C#) application running on Ubuntu Linux for the Royal Malaysian Navy.</p>
+  </div>
+
+  <div class="card">
+    <h3>Power BI GIS Visual &amp; Offline TileServer</h3>
+    <div class="subtitle">Data Visualization &amp; Mapping</div>
+    <p>Custom Power BI visual with Leaflet.js for GIS maps. Offline TileServer using OSM data for isolated/classified networks. Data migration projects with zero downtime.</p>
+  </div>
+</section>
+
+<!-- ===== EDUCATION ===== -->
+<section id="education" class="section">
+  <div class="section-header">
+    <span class="arrow">▶</span>
+    <h2>EDUCATION</h2>
+    <span class="comment"># ./education.sh --degree</span>
+  </div>
+
+  <div class="card">
+    <h3>Bachelor of Information Technology (Hons) — 2nd Class Upper</h3>
+    <div class="subtitle">International Islamic University Malaysia (IIUM) | 2011 – 2015</div>
+  </div>
+
+  <div class="card">
+    <h3>Foundation in Information Technology</h3>
+    <div class="subtitle">Centre for Foundation Studies IIUM | 2009 – 2011</div>
+  </div>
+
+  <div class="card">
+    <h3>SPM — Pure Science</h3>
+    <div class="subtitle">SMKA Kerian, Perak | 2004 – 2008</div>
+  </div>
+</section>
+
+<!-- ===== KEY ACHIEVEMENTS ===== -->
+<section id="achievements" class="section">
+  <div class="section-header">
+    <span class="arrow">▶</span>
+    <h2>KEY ACHIEVEMENTS</h2>
+    <span class="comment"># ./achievements.sh --honours</span>
+  </div>
+
+  <div class="card">
+    <ul>
+      <li>Developed mission-critical COP system for MINDEF and ESSCOM — real-time defence situational awareness platform</li>
+      <li>Integrated ADS-B + AIS data into unified geospatial display for defence command centres</li>
+      <li>Delivered Telekom Malaysia's TRIBE platform — full-stack digital transformation modules</li>
+      <li>Developed isolated EW Navigator 2.0 system with RDF integration via encrypted MINDEF network</li>
+      <li>3× DSA (Defence Security Asia) exhibitor — Asia's premier defence exhibition</li>
+      <li>10-year continuous service at Mindmatics</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== COMMAND HISTORY / FOOTER ===== -->
+<section class="footer">
+  <div class="prompt">
+    <span class="prompt-user">nasrul</span><span class="prompt-at">@</span><span class="prompt-host">nasrul-pc</span><span class="prompt-path">:~$</span> <span style="color:#e6f7e6;">history | grep "portfolio"</span>
+  </div>
+  <p>
+    1  ./whoami.sh<br>
+    2  ./about.sh --details<br>
+    3  ./contact.sh<br>
+    4  ./experience.sh --all<br>
+    5  ./skills.sh --verbose<br>
+    6  ./projects.sh --highlight<br>
+    7  ./education.sh --degree<br>
+    8  ./achievements.sh --honours<br>
+    9  ./exit.sh
+  </p>
+  <p style="margin-top:12px;color:rgba(0,255,65,0.2);font-size:11px;">
+    [EOF] — root@nasrul:~$ <span style="animation:blink 1s step-end infinite;">_</span>
+  </p>
+</section>
+
+</div>
+
+</body>
+</html>

@@ -3,665 +3,233 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mohammad Nasrullah · Senior Software Engineer</title>
+  <title>Theme Preview — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #0a0e17;
-      --bg-card: #111827;
-      --bg-card-hover: #1a2332;
-      --surface: #1e293b;
-      --border: #2a3a55;
-      --text: #e2e8f0;
-      --text-muted: #94a3b8;
-      --accent: #38bdf8;
-      --accent-dim: #0ea5e9;
-      --accent-glow: rgba(56, 189, 248, 0.15);
-      --green: #4ade80;
-      --amber: #fbbf24;
-      --radius: 16px;
-      --radius-sm: 10px;
-    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+      background: #0a0e17; color: #e2e8f0;
+      min-height: 100vh; padding: 40px 20px;
     }
-    ::selection { background: var(--accent); color: #000; }
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: 2.5rem; margin-bottom: 8px; text-align: center; }
+    h1 span { background: linear-gradient(135deg, #38bdf8, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .sub { color: #94a3b8; margin-bottom: 12px; text-align: center; font-size: 1.05rem; }
+    .current-note { text-align: center; color: #64748b; font-size: 0.85rem; margin-bottom: 40px; }
 
-    /* ── Background Grid ── */
-    .bg-grid {
-      position: fixed; inset: 0; z-index: -1;
-      background-image: linear-gradient(var(--border) 1px, transparent 1px),
-                        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 60px 60px;
-      opacity: 0.2;
-      pointer-events: none;
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: #111827; border: 1px solid #2a3a55;
+      border-radius: 20px; overflow: hidden; transition: all 0.3s;
+      display: flex; flex-direction: column;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(56,189,248,0.12); }
+
+    .card-thumb {
+      height: 180px; display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 700; position: relative; overflow: hidden;
+    }
+    .card-thumb .theme-icon { font-size: 3rem; margin-bottom: 8px; }
+    .card-thumb .theme-label {
+      position: absolute; bottom: 12px; right: 12px;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+      padding: 4px 12px; border-radius: 100px;
+      font-size: 0.7rem; font-weight: 500;
     }
 
-    /* ── Container ── */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-
-    /* ── Nav ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(10,14,23,0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
+    .card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .card-body h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+    .card-body .palette {
+      display: flex; gap: 4px; margin-bottom: 10px;
     }
-    nav .container {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
+    .card-body .palette span {
+      width: 20px; height: 20px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.1);
     }
-    nav .logo {
-      font-weight: 700; font-size: 1.15rem;
-      background: linear-gradient(135deg, var(--accent), #a855f7);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .card-body p { color: #94a3b8; font-size: 0.85rem; margin-bottom: 14px; line-height: 1.5; flex: 1; }
+    .card-body .tags { margin-bottom: 16px; }
+    .card-body .tags span {
+      display: inline-block; font-size: 0.7rem; padding: 3px 10px;
+      border-radius: 100px; margin-right: 4px; margin-bottom: 4px;
     }
-    nav .links { display: flex; gap: 28px; }
-    nav .links a {
-      color: var(--text-muted); text-decoration: none; font-size: 0.875rem;
-      font-weight: 500; transition: color 0.2s;
-    }
-    nav .links a:hover { color: var(--accent); }
-    .nav-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; }
-
-    /* ── Hero ── */
-    .hero {
-      min-height: 100vh; display: flex; align-items: center;
-      padding: 120px 0 80px; position: relative;
-    }
-    .hero::after {
-      content: '';
-      position: absolute; top: -30%; right: -10%;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-content { position: relative; z-index: 1; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2);
-      padding: 6px 16px; border-radius: 100px;
-      font-size: 0.8rem; color: var(--accent); margin-bottom: 24px;
-    }
-    .hero-badge i { font-size: 0.7rem; }
-    .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.2rem); font-weight: 800;
-      line-height: 1.1; margin-bottom: 16px;
-    }
-    .hero h1 .highlight {
-      background: linear-gradient(135deg, var(--accent), #a855f7);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero p {
-      font-size: 1.15rem; color: var(--text-muted);
-      max-width: 600px; margin-bottom: 32px;
-    }
-    .hero-stats {
-      display: flex; gap: 40px; margin-bottom: 40px;
-    }
-    .hero-stats .stat h3 {
-      font-size: 1.8rem; font-weight: 700; color: var(--accent);
-    }
-    .hero-stats .stat p {
-      font-size: 0.8rem; margin: 0; text-transform: uppercase;
-      letter-spacing: 0.05em; color: var(--text-muted);
-    }
-    .hero-actions {
-      display: flex; gap: 12px; flex-wrap: wrap;
-    }
+    .card-body .actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 28px; border-radius: 100px;
-      font-weight: 600; font-size: 0.9rem; text-decoration: none;
-      transition: all 0.25s; cursor: pointer; border: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border-radius: 100px; font-weight: 600;
+      font-size: 0.85rem; text-decoration: none; transition: all 0.25s;
+      background: #1e293b; color: #e2e8f0; border: 1px solid #2a3a55;
     }
+    .btn:hover { background: #334155; }
     .btn-primary {
-      background: var(--accent); color: #000;
+      background: linear-gradient(135deg, #38bdf8, #818cf8); color: #000;
+      border: none;
     }
-    .btn-primary:hover {
-      background: #7dd3fc; transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(56,189,248,0.3);
+    .btn-primary:hover { transform: scale(1.03); box-shadow: 0 4px 20px rgba(56,189,248,0.3); }
+
+    .active-badge {
+      display: inline-block; background: #4ade80; color: #000;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 10px;
+      border-radius: 100px; margin-bottom: 8px; width: fit-content;
     }
-    .btn-outline {
-      border: 1px solid var(--border); color: var(--text);
-      background: transparent;
-    }
-    .btn-outline:hover {
-      border-color: var(--accent); color: var(--accent);
-      transform: translateY(-2px);
+    .new-badge {
+      background: #fbbf24; color: #000;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 10px;
+      border-radius: 100px; margin-bottom: 8px; width: fit-content;
     }
 
-    /* ── Section ── */
-    section { padding: 100px 0; }
-    .section-label {
-      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;
-      color: var(--accent); font-weight: 600; margin-bottom: 8px;
+    .section-divider {
+      text-align: center; margin: 48px 0 32px;
+      position: relative;
     }
-    .section-title {
-      font-size: 2rem; font-weight: 700; margin-bottom: 48px;
+    .section-divider::after {
+      content: ''; position: absolute; top: 50%; left: 0; right: 0;
+      height: 1px; background: #2a3a55; z-index: 0;
     }
-
-    /* ── About ── */
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
-    }
-    .about-text p { color: var(--text-muted); margin-bottom: 16px; }
-    .about-info {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 32px;
-    }
-    .about-info h4 { font-size: 0.9rem; color: var(--accent); margin-bottom: 20px; }
-    .info-item {
-      display: flex; align-items: center; gap: 14px;
-      padding: 12px 0; border-bottom: 1px solid var(--border);
-    }
-    .info-item:last-child { border-bottom: none; }
-    .info-item i {
-      width: 36px; height: 36px; display: flex; align-items: center;
-      justify-content: center; border-radius: 10px;
-      background: rgba(56,189,248,0.1); color: var(--accent); font-size: 0.9rem;
-    }
-    .info-item .label { font-size: 0.75rem; color: var(--text-muted); }
-    .info-item .value { font-size: 0.9rem; font-weight: 500; }
-
-    /* ── Experience ── */
-    .timeline { position: relative; padding-left: 32px; }
-    .timeline::before {
-      content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
-      width: 2px; background: var(--border);
-    }
-    .timeline-item {
-      position: relative; margin-bottom: 48px;
-      padding-left: 32px;
-    }
-    .timeline-item:last-child { margin-bottom: 0; }
-    .timeline-item::before {
-      content: ''; position: absolute; left: -6px; top: 6px;
-      width: 14px; height: 14px; border-radius: 50%;
-      background: var(--accent); border: 3px solid var(--bg);
-      box-shadow: 0 0 0 2px var(--accent);
-    }
-    .timeline-item .date {
-      font-size: 0.8rem; color: var(--accent-dim); font-weight: 500;
-      margin-bottom: 4px;
-    }
-    .timeline-item h3 {
-      font-size: 1.2rem; font-weight: 600; margin-bottom: 2px;
-    }
-    .timeline-item .company {
-      color: var(--accent); font-weight: 500; font-size: 0.95rem;
-      margin-bottom: 12px;
-    }
-    .timeline-item p {
-      color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;
-    }
-    .timeline-item .tags {
-      display: flex; flex-wrap: wrap; gap: 6px;
-    }
-    .timeline-item .tags span {
-      background: rgba(56,189,248,0.1); color: var(--accent);
-      font-size: 0.75rem; padding: 4px 12px; border-radius: 100px;
-      border: 1px solid rgba(56,189,248,0.15);
-    }
-    .project-item {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 28px; margin-bottom: 20px;
-      transition: all 0.25s;
-    }
-    .project-item:hover {
-      border-color: var(--accent); background: var(--bg-card-hover);
-      transform: translateY(-2px);
-    }
-    .project-item h4 {
-      font-size: 1rem; font-weight: 600; margin-bottom: 4px;
-    }
-    .project-item .proj-meta {
-      font-size: 0.8rem; color: var(--accent); margin-bottom: 10px;
-    }
-    .project-item p {
-      color: var(--text-muted); font-size: 0.88rem; margin-bottom: 12px;
-    }
-    .project-item .tags span {
-      background: rgba(168,85,247,0.1); color: #c084fc;
-      font-size: 0.7rem; padding: 3px 10px; border-radius: 100px;
-      border: 1px solid rgba(168,85,247,0.15);
+    .section-divider span {
+      background: #0a0e17; padding: 0 20px; position: relative; z-index: 1;
+      color: #64748b; font-size: 0.85rem; text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
 
-    /* ── Skills ── */
-    .skills-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-    }
-    .skill-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 20px 24px;
-      transition: all 0.2s;
-    }
-    .skill-card:hover { border-color: var(--accent); }
-    .skill-card .skill-header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 8px;
-    }
-    .skill-card .skill-header h4 {
-      font-size: 0.9rem; font-weight: 600;
-    }
-    .skill-card .skill-header i {
-      color: var(--accent); font-size: 1.2rem;
-    }
-    .skill-card .skill-items {
-      display: flex; flex-wrap: wrap; gap: 5px;
-    }
-    .skill-card .skill-items span {
-      background: rgba(56,189,248,0.08); color: var(--text-muted);
-      font-size: 0.78rem; padding: 2px 10px; border-radius: 100px;
-    }
-
-    /* ── Projects Showcase ── */
-    .project-feat-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-    }
-    .project-feat {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 28px;
-      transition: all 0.25s;
-    }
-    .project-feat:hover {
-      border-color: var(--accent); transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(56,189,248,0.08);
-    }
-    .project-feat .icon {
-      width: 44px; height: 44px; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(56,189,248,0.1); margin-bottom: 16px;
-    }
-    .project-feat .icon i { font-size: 1.2rem; color: var(--accent); }
-    .project-feat h4 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
-    .project-feat p {
-      font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;
-      line-height: 1.5;
-    }
-    .project-feat .tags span {
-      font-size: 0.7rem; color: var(--accent); background: rgba(56,189,248,0.08);
-      padding: 2px 10px; border-radius: 100px;
-    }
-
-    /* ── Contact ── */
-    .contact-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 48px;
-      text-align: center; max-width: 600px; margin: 0 auto;
-    }
-    .contact-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
-    .contact-card p { color: var(--text-muted); margin-bottom: 32px; }
-    .contact-links {
-      display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
-    }
-    .contact-btn {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 14px 28px; border-radius: 100px;
-      background: var(--surface); border: 1px solid var(--border);
-      color: var(--text); text-decoration: none; font-weight: 500;
-      transition: all 0.2s;
-    }
-    .contact-btn:hover {
-      border-color: var(--accent); color: var(--accent);
-      transform: translateY(-2px);
-    }
-    .contact-btn i { font-size: 1.1rem; }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 0; text-align: center;
-      color: var(--text-muted); font-size: 0.85rem;
-    }
-
-    /* ── Responsive ── */
     @media (max-width: 768px) {
-      nav .links { display: none; }
-      nav .links.open { display: flex; flex-direction: column; gap: 16px;
-        position: absolute; top: 64px; left: 0; right: 0;
-        background: var(--bg); padding: 24px; border-bottom: 1px solid var(--border); }
-      .nav-toggle { display: block; }
-      .about-grid { grid-template-columns: 1fr; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .project-feat-grid { grid-template-columns: 1fr; }
-      .hero-stats { gap: 24px; }
-      .hero-stats .stat h3 { font-size: 1.4rem; }
+      .grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-<div class="bg-grid"></div>
+<div class="container">
+  <h1>🎨 <span>Theme Portfolio</span></h1>
+  <p class="sub">Pilih theme yang paling sesuai dengan gaya kau</p>
+  <p class="current-note">💡 Sedang dipakai: <strong>Dark Navy + Blue</strong></p>
 
-<!-- ─── Nav ─── -->
-<nav>
-  <div class="container">
-    <div class="logo">MN</div>
-    <button class="nav-toggle" onclick="document.querySelector('.links').classList.toggle('open')">
-      <i class="fas fa-bars"></i>
-    </button>
-    <div class="links">
-      <a href="#about">About</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </div>
-</nav>
+  <div class="section-divider"><span>✦ Batch 1 — Original ✦</span></div>
 
-<!-- ─── Hero ─── -->
-<section class="hero" id="home">
-  <div class="container hero-content">
-    <div class="hero-badge">
-      <i class="fas fa-shield-halved"></i> Defence &amp; Security Tech
-    </div>
-    <h1>Hi, I'm <span class="highlight">Mohammad Nasrullah</span></h1>
-    <p>Senior Software Engineer with 10 years of experience building mission-critical COP systems, GIS platforms, and full-stack applications for defence and enterprise.</p>
-    <div class="hero-stats">
-      <div class="stat"><h3>10+</h3><p>Years Exp</p></div>
-      <div class="stat"><h3>5+</h3><p>Major Projects</p></div>
-      <div class="stat"><h3>3×</h3><p>DSA Exhibitor</p></div>
-    </div>
-    <div class="hero-actions">
-      <a href="#projects" class="btn btn-primary"><i class="fas fa-briefcase"></i> View Projects</a>
-      <a href="#contact" class="btn btn-outline"><i class="fas fa-envelope"></i> Contact</a>
-      <a href="https://www.linkedin.com/in/mohammad-nasrullah-abu-bakar-634962b7" target="_blank" class="btn btn-outline"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-    </div>
-  </div>
-</section>
-
-<!-- ─── About ─── -->
-<section id="about">
-  <div class="container">
-    <div class="section-label">About</div>
-    <h2 class="section-title">Who I Am</h2>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>Senior Software Engineer with <strong>10 years of experience</strong> in full-stack development, GIS applications, and system integration. Specialized in building <strong>Common Operating Picture (COP)</strong> systems for defence and security operations — integrating sensor data, real-time visualization, and intelligence reporting.</p>
-        <p>Proven track record delivering complex mission-critical systems for <strong>MINDEF</strong>, <strong>ESSCOM</strong>, and <strong>Telekom Malaysia</strong>. Strong across Python, Node.js, React, AngularJS, and C# with deep expertise in Docker containerization, data analytics, and geospatial systems.</p>
-        <p>Adept at AI-assisted development using modern coding tools to accelerate delivery and improve code quality.</p>
+  <div class="grid">
+    <!-- 1. Current -->
+    <div class="card" style="border-color:#38bdf8;">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#0a0e17,#1e293b);color:#38bdf8;">
+        <span class="theme-label" style="background:#38bdf8;color:#000;">✓ ACTIVE</span>
       </div>
-      <div class="about-info">
-        <h4><i class="fas fa-address-card"></i> Quick Info</h4>
-        <div class="info-item">
-          <i class="fas fa-user"></i>
-          <div><div class="label">Name</div><div class="value">Mohammad Nasrullah</div></div>
+      <div class="card-body">
+        <span class="active-badge">LIVE</span>
+        <h3>Dark Navy + Blue</h3>
+        <div class="palette"><span style="background:#0a0e17"></span><span style="background:#1e293b"></span><span style="background:#38bdf8"></span><span style="background:#2a3a55"></span></div>
+        <p>Dark theme klasik — navy gelap dengan aksen biru terang. Rasa tech/defence yang solid.</p>
+      </div>
+    </div>
+
+    <!-- 2. Light Professional -->
+    <div class="card">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#f8fafc,#e2e8f0);color:#2563eb;">
+        <span class="theme-icon">☀️</span>
+        <span class="theme-label" style="background:rgba(0,0,0,0.6);color:#fff;">light</span>
+      </div>
+      <div class="card-body">
+        <h3>Light Professional</h3>
+        <div class="palette"><span style="background:#f8fafc"></span><span style="background:#2563eb"></span><span style="background:#0f172a"></span><span style="background:#e2e8f0"></span></div>
+        <p>Putih bersih, corporate vibe. Sesuai kalau nak nampak profesional & formal. LinkedIn energy.</p>
+        <div class="actions">
+          <a href="theme-light.html" class="btn">👀 Preview</a>
         </div>
-        <div class="info-item">
-          <i class="fas fa-location-dot"></i>
-          <div><div class="label">Location</div><div class="value">Kajang, Selangor</div></div>
+      </div>
+    </div>
+
+    <!-- 3. Command Centre -->
+    <div class="card">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#0a140a,#1a2e1a);color:#f59e0b;">
+        <span class="theme-icon">🛡️</span>
+        <span class="theme-label" style="background:rgba(0,0,0,0.6);color:#f59e0b;">tactical</span>
+      </div>
+      <div class="card-body">
+        <h3>Command Centre</h3>
+        <div class="palette"><span style="background:#0a140a"></span><span style="background:#142114"></span><span style="background:#f59e0b"></span><span style="background:#d4d4c8"></span></div>
+        <p>Olive hitam + amber — macam radar HUD. Military/defence feel, sesuai dengan background COP & MINDEF.</p>
+        <div class="actions">
+          <a href="theme-command.html" class="btn">👀 Preview</a>
         </div>
-        <div class="info-item">
-          <i class="fas fa-envelope"></i>
-          <div><div class="label">Email</div><div class="value">nasrul29@gmail.com</div></div>
-        </div>
-        <div class="info-item">
-          <i class="fas fa-phone"></i>
-          <div><div class="label">Phone</div><div class="value">010-4565686</div></div>
-        </div>
-        <div class="info-item">
-          <i class="fas fa-globe"></i>
-          <div><div class="label">Languages</div><div class="value">Malay · English · Arabic</div></div>
+      </div>
+    </div>
+
+    <!-- 4. Glassmorphism -->
+    <div class="card">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#0f0a1a,#1e1145);color:#a78bfa;">
+        <span class="theme-icon">🔮</span>
+        <span class="theme-label" style="background:rgba(0,0,0,0.6);color:#a78bfa;">glass</span>
+      </div>
+      <div class="card-body">
+        <h3>Glassmorphism</h3>
+        <div class="palette"><span style="background:#0f0a1a"></span><span style="background:#1e1145"></span><span style="background:#a78bfa"></span><span style="background:#f472b6"></span></div>
+        <p>Kad glass/blur dengan gradient background purple-navy. Modern, sleek, UI terkini.</p>
+        <div class="actions">
+          <a href="theme-glass.html" class="btn">👀 Preview</a>
         </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ─── Experience ─── -->
-<section id="experience">
-  <div class="container">
-    <div class="section-label">Experience</div>
-    <h2 class="section-title">Career Timeline</h2>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="date">2016 – Present · 10 years</div>
-        <h3>Software Engineer</h3>
-        <div class="company">Mindmatics Sdn Bhd — Kajang, Selangor</div>
-        <p>Develop and maintain mission-critical command, control, and intelligence systems for defence and security agencies. Lead GIS application development and sensor data integration for Common Operating Picture (COP) platforms.</p>
-        <div class="tags">
-          <span>Python</span><span>Node.js</span><span>React</span><span>AngularJS</span>
-          <span>C# WPF</span><span>Docker</span><span>Elasticsearch</span>
-          <span>RabbitMQ</span><span>OpenLayers</span><span>PostgreSQL</span>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="date">2015 – 2016 · 1 year</div>
-        <h3>Software Engineer</h3>
-        <div class="company">NFE Consulting Sdn Bhd — Kuala Lumpur</div>
-        <p>Sole back-end developer for multiple web applications including i-Kajang, VRS (Visitor Registration System), and Heritage Trail Taiping. Direct client engagement for requirements gathering and delivery.</p>
-        <div class="tags">
-          <span>Python Flask</span><span>PHP CodeIgniter</span><span>MySQL</span>
-          <span>SQLite</span><span>REST API</span><span>Visual Basic</span>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="date">Jun 2015 – Dec 2015</div>
-        <h3>Intern — Software Development</h3>
-        <div class="company">NFE Consulting Sdn Bhd — Kuala Lumpur</div>
-        <p>Participated in practical training programme focused on software development, subsequently offered permanent position.</p>
-      </div>
-    </div>
-  </div>
-</section>
+  <div class="section-divider"><span>✦ Batch 2 — Eksklusif ✦</span></div>
 
-<!-- ─── Projects ─── -->
-<section id="projects">
-  <div class="container">
-    <div class="section-label">Projects</div>
-    <h2 class="section-title">Key Deliverables</h2>
-
-    <div class="project-feat-grid">
-      <div class="project-feat">
-        <div class="icon"><i class="fas fa-satellite"></i></div>
-        <h4>C2 COP System — MINDEF / ESSCOM</h4>
-        <p>Common Operating Picture platform for real-time defence situational awareness. Integrates ADS-B air traffic and AIS maritime vessel tracking into a unified geospatial display with live data streaming.</p>
-        <div class="tags">
-          <span>OpenLayers</span><span>React</span><span>AngularJS</span>
-          <span>Python</span><span>Node.js</span><span>RabbitMQ</span><span>Docker</span>
-        </div>
+  <div class="grid">
+    <!-- 5. Terminal Matrix -->
+    <div class="card">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#0a0a0a,#001a00);color:#00ff41;">
+        <span class="theme-icon">⎈</span>
+        <span class="theme-label" style="background:rgba(0,255,65,0.15);color:#00ff41;">hacker</span>
       </div>
-      <div class="project-feat">
-        <div class="icon"><i class="fas fa-tower-broadcast"></i></div>
-        <h4>EW Navigator 2.0 — RDF Integration</h4>
-        <p>Electronic Warfare navigation system integrated with Radio Direction Finding, enabling bi-directional tasking between command centre and field operators via encrypted MINDEF network.</p>
-        <div class="tags">
-          <span>C# WPF</span><span>Telerik</span><span>RDF</span>
-          <span>Geospatial</span><span>Mapsui</span>
-        </div>
-      </div>
-      <div class="project-feat">
-        <div class="icon"><i class="fas fa-mobile-screen"></i></div>
-        <h4>Cross-Platform App — Royal Malaysian Navy</h4>
-        <p>Cross-platform desktop application built with Avalonia (C#) for Ubuntu Linux deployment, replacing legacy Windows-only systems with a modern cross-platform solution.</p>
-        <div class="tags">
-          <span>Avalonia</span><span>C#</span><span>Ubuntu</span>
-          <span>X-Plat</span><span>GIS</span>
-        </div>
-      </div>
-      <div class="project-feat">
-        <div class="icon"><i class="fas fa-cloud"></i></div>
-        <h4>TRIBE Platform — Telekom Malaysia</h4>
-        <p>Full-stack web application modules for TM's digital transformation initiative using React, Python, and Node.js with MySQL, MSSQL, and Redis caching.</p>
-        <div class="tags">
-          <span>React</span><span>Python</span><span>Node.js</span>
-          <span>MySQL</span><span>MSSQL</span><span>Redis</span>
-        </div>
-      </div>
-      <div class="project-feat">
-        <div class="icon"><i class="fas fa-map"></i></div>
-        <h4>Offline TileServer — OSM</h4>
-        <p>Built using OpenStreetMap data for secure/isolated network deployment, enabling fully offline base map rendering for defence systems with no internet dependency.</p>
-        <div class="tags">
-          <span>TileServer</span><span>OpenStreetMap</span>
-          <span>Offline GIS</span><span>Nginx</span>
-        </div>
-      </div>
-      <div class="project-feat">
-        <div class="icon"><i class="fas fa-chart-line"></i></div>
-        <h4>Power BI GIS Visual — Leaflet.js</h4>
-        <p>Custom Power BI visual using Leaflet.js for interactive GIS map rendering inside Power BI dashboards, enabling executive geospatial decision-making.</p>
-        <div class="tags">
-          <span>Power BI</span><span>Leaflet.js</span>
-          <span>GIS</span><span>Dashboard</span>
+      <div class="card-body">
+        <span class="new-badge">🔥 BARU</span>
+        <h3>Terminal Matrix</h3>
+        <div class="palette"><span style="background:#0a0a0a"></span><span style="background:#00ff41"></span><span style="background:#00cc33"></span><span style="background:#003300"></span></div>
+        <p>Green CRT hacker terminal — monospace, scanline, typing effect. Macam guna Linux CLI. Power user vibes.</p>
+        <div class="actions">
+          <a href="theme-matrix.html" class="btn btn-primary">👀 Preview</a>
         </div>
       </div>
     </div>
 
-    <div style="margin-top: 32px;">
-      <div class="section-label" style="margin-top: 48px;">Other Systems</div>
-      <div class="project-item">
-        <h4>Data Migration — User &amp; Configuration Migration</h4>
-        <div class="proj-meta">Mindmatics</div>
-        <p>Led migration of existing user data (user management, map layers, operator dossiers) to a new platform with zero downtime and full data integrity.</p>
-        <div class="tags">
-          <span>Data Migration</span><span>ETL</span><span>MySQL</span><span>MSSQL</span>
+    <!-- 6. Synthwave -->
+    <div class="card">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#0d0221,#1a0033);color:#ff2a6d;">
+        <span class="theme-icon">🌅</span>
+        <span class="theme-label" style="background:rgba(255,42,109,0.15);color:#ff2a6d;">retro</span>
+      </div>
+      <div class="card-body">
+        <span class="new-badge">🔥 BARU</span>
+        <h3>Synthwave Sunset</h3>
+        <div class="palette"><span style="background:#0d0221"></span><span style="background:#ff2a6d"></span><span style="background:#05d9e8"></span><span style="background:#b300f2"></span></div>
+        <p>Neon retro 80s — hot pink, cyan, purple. Ada grid horizon, glowing sun, floating particles. Paling striking!</p>
+        <div class="actions">
+          <a href="theme-synthwave.html" class="btn btn-primary">👀 Preview</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Neon Minimal -->
+    <div class="card">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#ffffff,#f1f5f9);color:#e11d48;">
+        <span class="theme-icon">◆</span>
+        <span class="theme-label" style="background:rgba(0,0,0,0.6);color:#fff;">bold</span>
+      </div>
+      <div class="card-body">
+        <span class="new-badge">🔥 BARU</span>
+        <h3>Neon Minimal</h3>
+        <div class="palette"><span style="background:#ffffff"></span><span style="background:#e11d48"></span><span style="background:#0f0f0f"></span><span style="background:#f1f5f9"></span></div>
+        <p>White minimal + hot pink accent. Typography gergasi, brutalism sikit. Berani dan bold. Memang standout.</p>
+        <div class="actions">
+          <a href="theme-neonminimal.html" class="btn btn-primary">👀 Preview</a>
         </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ─── Skills ─── -->
-<section id="skills">
-  <div class="container">
-    <div class="section-label">Skills</div>
-    <h2 class="section-title">Tech Stack</h2>
-    <div class="skills-grid">
-      <div class="skill-card">
-        <div class="skill-header">
-          <h4><i class="fas fa-code"></i> Languages</h4>
-          <i class="fas fa-terminal"></i>
-        </div>
-        <div class="skill-items">
-          <span>Python</span><span>JavaScript</span><span>TypeScript</span>
-          <span>PHP</span><span>C#</span><span>Java</span><span>HTML/CSS</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-header">
-          <h4><i class="fas fa-window-maximize"></i> Frontend</h4>
-          <i class="fas fa-paint-brush"></i>
-        </div>
-        <div class="skill-items">
-          <span>React</span><span>AngularJS</span><span>Angular 6+</span>
-          <span>C# WPF</span><span>Avalonia</span><span>Telerik</span><span>jQuery</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-header">
-          <h4><i class="fas fa-server"></i> Backend</h4>
-          <i class="fas fa-gear"></i>
-        </div>
-        <div class="skill-items">
-          <span>Node.js</span><span>Express.js</span><span>Flask</span>
-          <span>CodeIgniter</span><span>REST API</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-header">
-          <h4><i class="fas fa-database"></i> Databases</h4>
-          <i class="fas fa-database"></i>
-        </div>
-        <div class="skill-items">
-          <span>MySQL</span><span>MSSQL</span><span>MongoDB</span>
-          <span>MariaDB</span><span>Redis</span><span>SQLite</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-header">
-          <h4><i class="fas fa-globe"></i> GIS &amp; Visualization</h4>
-          <i class="fas fa-map-location-dot"></i>
-        </div>
-        <div class="skill-items">
-          <span>OpenLayers</span><span>Leaflet.js</span><span>GeoServer</span>
-          <span>TileServer</span><span>Mapsui</span><span>Power BI</span><span>Kibana</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-header">
-          <h4><i class="fas fa-gears"></i> DevOps &amp; Tools</h4>
-          <i class="fas fa-cloud"></i>
-        </div>
-        <div class="skill-items">
-          <span>Docker</span><span>Portainer</span><span>Proxmox</span>
-          <span>Git</span><span>Nginx</span><span>RabbitMQ</span><span>Elasticsearch</span>
-        </div>
-      </div>
-    </div>
+  <div style="text-align:center;margin-top:40px;color:#64748b;font-size:0.85rem;">
+    Dah nampak pilihan? Bagi tau nak guna yang mana — saya akan apply content sebenar & push semula ke GitHub.
   </div>
-</section>
-
-<!-- ─── Education ─── -->
-<section id="education" style="padding-top: 0;">
-  <div class="container">
-    <div class="section-label">Education</div>
-    <h2 class="section-title">Background</h2>
-    <div class="about-grid">
-      <div class="about-text">
-        <div class="project-item" style="background:var(--bg-card);border:1px solid var(--border);">
-          <h4>Bachelor of Information Technology (Hons) — 2nd Class Upper</h4>
-          <div class="proj-meta">International Islamic University Malaysia (IIUM) · 2011–2015</div>
-        </div>
-      </div>
-      <div class="about-text">
-        <div class="project-item" style="background:var(--bg-card);border:1px solid var(--border);">
-          <h4>Foundation in Information Technology</h4>
-          <div class="proj-meta">Centre for Foundation Studies IIUM · 2009–2011</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── Contact ─── -->
-<section id="contact">
-  <div class="container">
-    <div class="section-label">Contact</div>
-    <h2 class="section-title">Get In Touch</h2>
-    <div class="contact-card">
-      <h3>Let's Work Together</h3>
-      <p>Looking for a senior fullstack or GIS engineer? I'm open to opportunities in Kajang, KL/Selangor, or remote.</p>
-      <div class="contact-links">
-        <a href="mailto:nasrul29@gmail.com" class="contact-btn">
-          <i class="fas fa-envelope"></i> nasrul29@gmail.com
-        </a>
-        <a href="tel:+60104565686" class="contact-btn">
-          <i class="fas fa-phone"></i> 010-4565686
-        </a>
-        <a href="https://www.linkedin.com/in/mohammad-nasrullah-abu-bakar-634962b7" target="_blank" class="contact-btn">
-          <i class="fab fa-linkedin-in"></i> LinkedIn
-        </a>
-        <a href="https://wa.me/60104565686" target="_blank" class="contact-btn">
-          <i class="fab fa-whatsapp"></i> WhatsApp
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── Footer ─── -->
-<footer>
-  <div class="container">
-    <p>&copy; 2026 Mohammad Nasrullah. Built with <i class="fas fa-heart" style="color:var(--accent);"></i></p>
-  </div>
-</footer>
-
+</div>
 </body>
 </html>

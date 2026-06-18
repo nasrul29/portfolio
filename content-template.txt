@@ -1,0 +1,48 @@
+Mohammad Nasrullah Bin Abu Bakar | Senior Software Engineer | Kajang, Selangor
+📞 010-4565686 | 📧 nasrul29@gmail.com | LinkedIn: https://www.linkedin.com/in/mohammad-nasrullah-abu-bakar-634962b7
+Bahasa Melayu (Native), English (Professional), Arabic (Basic)
+
+=== PROFESSIONAL SUMMARY ===
+Senior Software Engineer with 10 years of experience in full-stack development, GIS applications, and system integration. Specialized in building Common Operating Picture (COP) systems for defence and security operations — integrating sensor data, real-time visualization, and intelligence reporting. Proven track record delivering complex mission-critical systems for MINDEF, ESSCOM, and Telekom Malaysia. Strong across Python, Node.js, React, AngularJS, and C# with deep expertise in Docker containerization, data analytics, and geospatial systems.
+
+=== EXPERIENCE ===
+
+Software Engineer | Mindmatics Sdn Bhd — Kajang, Selangor | 2016–Present (10 years)
+Develop and maintain mission-critical command, control, and intelligence systems for defence and security agencies. Lead GIS application development and sensor data integration.
+
+Projects:
+- C2 COP System — MINDEF/ESSCOM: Common Operating Picture platform for real-time situational awareness. Integrated ADS-B (air traffic) and AIS (maritime vessel) tracking into unified geospatial display. Web: OpenLayers, React, AngularJS. Desktop: C# WPF + Mapsui. Backend: Python, Node.js, RabbitMQ, Elasticsearch, Kibana, Docker.
+- TRIBE Platform — Telekom Malaysia: Full-stack web modules for digital transformation. React, Python, Node.js, MySQL, MSSQL, Redis.
+- EW Navigator 2.0: C# WPF desktop with Telerik UI. Integrated RDF (Radio Direction Finding) system for bi-directional tasking between command centre and field operators via encrypted MINDEF network.
+- Cross-Platform App — Royal Malaysian Navy: Avalonia (C#) for Ubuntu Linux, replacing legacy Windows-only systems.
+- Others: Power BI dashboards, custom Power BI visual with Leaflet.js for GIS maps, offline TileServer using OSM for isolated networks. Data migration (user management, map layers, operator dossiers) with zero downtime.
+
+Software Engineer | NFE Consulting Sdn Bhd — KL | 2015–2016 (1 year)
+Sole back-end developer. Maintained i-Kajang, VRS (Visitor Registration System in VB), Heritage Trail Taiping. Python Flask, PHP CodeIgniter, MySQL, SQLite, REST APIs.
+
+Intern | NFE Consulting Sdn Bhd — KL | Jun–Dec 2015
+Offered permanent position after internship.
+
+=== TECHNICAL SKILLS ===
+Languages: Python, JavaScript/TypeScript, PHP, C#, Java, HTML/CSS
+Frontend: React, AngularJS, Angular 6+, C# WPF, Avalonia, Telerik, jQuery
+Backend: Node.js, Express.js, Flask, CodeIgniter, REST API
+GIS & Viz: OpenLayers, Leaflet.js, GeoServer, TileServer, Mapsui, Power BI, Kibana, COP Systems
+Databases: MySQL, MSSQL, MongoDB, MariaDB, Redis, SQLite
+Message Brokers: RabbitMQ
+Search & Analytics: Elasticsearch, Kibana
+DevOps: Docker, Portainer, Proxmox (KVM/LXC), Git, Nginx, Reverse Proxy
+AI: Hermes Agent, OpenAI Codex, Prompt Engineering
+
+=== EDUCATION ===
+Bachelor of Information Technology (Hons) — 2nd Class Upper | IIUM | 2011–2015
+Foundation in Information Technology | Centre for Foundation Studies IIUM | 2009–2011
+SPM — Pure Science | SMKA Kerian, Perak | 2004–2008
+
+=== KEY ACHIEVEMENTS ===
+- Developed mission-critical COP system for MINDEF and ESSCOM
+- Integrated ADS-B + AIS data into unified geospatial display for defence command centres
+- Delivered Telekom Malaysia's TRIBE platform
+- Developed isolated EW Navigator 2.0 system with RDF integration via encrypted MINDEF network
+- 3× DSA (Defence Security Asia) exhibitor — Asia's premier defence exhibition
+- 10-year continuous service at Mindmatics
