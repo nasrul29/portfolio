@@ -377,6 +377,9 @@
 
     /* ── Footer ── */
     footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; color: var(--text-dim); font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; }
+    .visitor-counter { margin-top: 10px; font-size: 0.7rem; opacity: 0.7; }
+    .visitor-counter i { color: var(--accent); margin-right: 4px; }
+    .visitor-counter #visitorCount { color: var(--accent); font-weight: 700; }
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
@@ -723,8 +726,23 @@
 <footer>
   <div class="container">
     <p>MN::portfolio // <span style="color:var(--accent);">COMMAND CENTRE</span> // SIGNOFF</p>
+    <div class="visitor-counter" id="visitorCounter">
+      <i class="fas fa-eye"></i> <span id="visitorCount">—</span> page views
+    </div>
   </div>
 </footer>
+
+<script>
+// Visitor counter — CountAPI (free, no auth needed)
+fetch('https://api.countapi.xyz/hit/nasrul29/portfolio')
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById('visitorCount').textContent = d.value.toLocaleString();
+  })
+  .catch(() => {
+    document.getElementById('visitorCount').textContent = '?';
+  });
+</script>
 
 </body>
 </html>
